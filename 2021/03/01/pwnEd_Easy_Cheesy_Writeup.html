@@ -98,7 +98,7 @@
             
             <hr>
             <ul>
-  <li><a href="#pwned2021easycheesywriteup">pwnEd2021”EasyCheesy”Writeup</a>
+  <li><a href="#pwned-2021-easycheesy-writeup">pwnEd 2021 “EasyCheesy” Writeup</a>
     <ul>
       <li><a href="#step-1-reading-the-source">Step 1: Reading the source</a></li>
       <li><a href="#step-2-reading-the-assembly">Step 2: Reading the assembly</a></li>
@@ -114,7 +114,7 @@
 
             <!-- POST CONTENT -->
             <div class="entry-content">
-                <h1 id="pwned2021easycheesywriteup">pwnEd2021”EasyCheesy”Writeup</h1>
+                <h1 id="pwned-2021-easycheesy-writeup">pwnEd 2021 “EasyCheesy” Writeup</h1>
 
 <p>Hey everyone. Today I’ll be taking you through how I solved the “Easy Cheesy” challenge during the 2021 pwnEd CTF. This was a really, really fun challenge for me, and I’m really happy I was able to do it.</p>
 
@@ -298,7 +298,7 @@
 
 <p>But, system() and execve() aren’t in the binary, so we’ll have to grab them from elsewhere. Fortunately, we can perform a ret2libc attack in order to call them.</p>
 
-<p>In order to call function from libc, we need to find out where they are in memory. Because <strong>ASLR</strong> is enabled on the server, the address of libc will change each time the binary is executed, but the function offsets inside libc will not (more on this in a moment). So each time we run our exploit, we need to leak some functions in order to find out where libc is .</p>
+<p>In order to call function from libc, we need to find out where they are in memory. Because <strong>ASLR</strong> is enabled on the server, the address of libc (and consequently, all the functions inside of it) will change each time the binary is executed, but the function offsets inside libc will not (more on this in a moment). So each time we run our exploit, we need to leak some functions in order to find out where libc is .</p>
 
 <p>To do this, we’ll follow my super cool 4 step plan:</p>
 
@@ -490,7 +490,7 @@
 
 <p><code class="language-plaintext highlighter-rouge">arg4 = RCX</code></p>
 
-<p>The list goes on, but we only need to care about the first few. In this case, RDX, arg3 of execve(), was already pointing to NULL when I called the function, so I didn’t need to set it to anything. RSI on the other hand, which is arg2 to execve(), was not set to NULL. So I had to grab a gadget to solve this issue. The only one I could find was <code class="language-plaintext highlighter-rouge">pop rsi; pop r15; ret;</code>. So my ROPchain had to be a little longer in order for me firstly set RSI, then set R15, then ret back to execve(). You can see how impacted the payload, but all I had to do was give RSI and R15 the value of 0.</p>
+<p>The list goes on, but we only need to care about the first few. In this case, RDX, arg3 of execve(), was already pointing to NULL when I called the function, so I didn’t need to set it to anything. RSI on the other hand, which is arg2 to execve(), was not set to NULL. So I had to grab a gadget to solve this issue. The only one I could find was <code class="language-plaintext highlighter-rouge">pop rsi; pop r15; ret;</code>. So my ROPchain had to be a little longer in order for me firstly set RSI, then set R15, then ret back to execve(). You can see how this impacted the payload, but all I had to do was give RSI and R15 the value of 0.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
 
