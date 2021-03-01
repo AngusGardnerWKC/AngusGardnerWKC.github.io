@@ -480,8 +480,9 @@
 
 <p>You’ll notice that in our final payload, there’s a bunch of p64(0)’s, and also a pop_rsi gadget. This is because <code class="language-plaintext highlighter-rouge">execve()</code> actually expects 3 arguments, not 1.</p>
 
-<p>We want to call <code class="language-plaintext highlighter-rouge">execve("/bin/sh",NULL,NULL)</code>, so we need to control more of the function arguments. 64bit calling convention states that function arguments are passed using the following registers: 
-<code class="language-plaintext highlighter-rouge">arg1 = RDI</code></p>
+<p>We want to call <code class="language-plaintext highlighter-rouge">execve("/bin/sh",NULL,NULL)</code>, so we need to control more of the function arguments. 64bit calling convention states that function arguments are passed using the following registers:</p>
+
+<p><code class="language-plaintext highlighter-rouge">arg1 = RDI</code></p>
 
 <p><code class="language-plaintext highlighter-rouge">arg2 = RSI</code></p>
 
