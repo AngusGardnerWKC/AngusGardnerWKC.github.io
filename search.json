@@ -2,15 +2,6 @@
   
     {
 
-      "title"    : "Stack Based Buffer Overflows",
-      "url"      : "/2021/03/06/Stack_Based_Buffer_Overflows.html",
-      "tags"     : "pwn, Binary Explotation, Beginner",
-      "date"     : "2021-03-06"
-
-    } ,
-  
-    {
-
       "title"    : "pwnEd 2021 &#39;Easy Cheesy&#39; Writeup",
       "url"      : "/2021/02/28/pwnEd_Easy_Cheesy_Writeup.html",
       "tags"     : "pwn, ROP, Binary Exploitation",
